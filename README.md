@@ -78,6 +78,30 @@ npm run dev
 - Frontend: http://localhost:8080
 - Backend: http://localhost:3001
 
+## Docker Deployment
+
+You can run the entire stack locally using Docker Compose.
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Running with Docker
+
+1.  **Build and Run**:
+    ```sh
+    docker-compose up --build
+    ```
+
+2.  **Access the Application**:
+    - Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+The `docker-compose.yml` orchestrates:
+- **Frontend**: Served via Nginx on port 8080.
+- **Backend**: Hono server running on internal port 3001.
+
+
 ## Tech Stack
 
 - **Frontend**: React, TypeScript, Vite, Tailwind CSS, shadcn/ui
@@ -86,4 +110,4 @@ npm run dev
 
 ## Version
 
-v1.0.0
+v1.0.1

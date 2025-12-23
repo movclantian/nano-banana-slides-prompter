@@ -84,7 +84,7 @@ export default function Index() {
     });
   };
 
-  const hasContent = 
+  const hasContent =
     (content.type === 'text' && content.text.trim()) ||
     (content.type === 'topic' && content.topic) ||
     (content.type === 'file' && content.fileContent) ||
@@ -99,9 +99,9 @@ export default function Index() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
-        
+
         {/* Subtle Grid Pattern */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
@@ -109,7 +109,7 @@ export default function Index() {
             backgroundSize: '60px 60px'
           }}
         />
-        
+
         <div className="relative container mx-auto px-4 py-10 md:py-14">
           <div className="flex items-center gap-4">
             <div className="p-3 rounded-2xl bg-primary/10 backdrop-blur-sm border border-primary/20 shadow-lg shadow-primary/5">
@@ -198,7 +198,7 @@ export default function Index() {
       {/* Footer */}
       <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm mt-16">
         <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-          Nano Banana Slides Prompter v1.0 - Generate optimized prompts for Nano Banana Pro Slides
+          Nano Banana Slides Prompter v{__APP_VERSION__} - Generate optimized prompts for Nano Banana Pro Slides
         </div>
       </footer>
     </div>
