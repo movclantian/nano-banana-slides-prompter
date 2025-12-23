@@ -1,6 +1,8 @@
 # Nano Banana Slides Prompter
 
-Generate optimized prompts for Nano Banana Pro Slides - Google's AI slide generation tool.
+Generate optimized prompts for Nano Banana Pro Slides - Generate slides using AI.
+
+![App Screenshot](./docs/samples/screenshot.png)
 
 ## Sample Slides
 
