@@ -4,6 +4,35 @@ Generate optimized prompts for Nano Banana Pro Slides - Generate slides using AI
 
 ![App Screenshot](./docs/samples/Screenshot.png)
 
+## 🆕 v1.0.3 Update - Even More Amazing Results!
+
+We've made significant improvements to the prompt generation engine. The results are now more cinematic, feature-rich, and visually stunning than ever before!
+
+**What's New:**
+- 🎭 **Style Personas** - Each style now has a unique creative identity that guides the AI
+- 🎨 **Expanded Visual Vocabulary** - 200+ visual terms across 24 categories
+- 📝 **Chain-of-Thought Prompting** - AI now thinks through each visual decision
+- 🖼️ **Richer Backgrounds** - More texture, pattern, and atmospheric options
+- 📄 **CSV File Support** - Upload CSV data for data-driven presentations
+
+**New Sample Slides (v1.0.3):**
+
+<p>
+  <img src="./docs/samples/sample9.png" width="240" alt="Sample 9"/>
+  <img src="./docs/samples/sample10.jpeg" width="240" alt="Sample 10"/>
+  <img src="./docs/samples/sample11.png" width="240" alt="Sample 11"/>
+</p>
+<p>
+  <img src="./docs/samples/sample12.jpeg" width="240" alt="Sample 12"/>
+  <img src="./docs/samples/sample13.jpeg" width="240" alt="Sample 13"/>
+  <img src="./docs/samples/sample14.png" width="240" alt="Sample 14"/>
+</p>
+<p>
+  <img src="./docs/samples/sample15.jpeg" width="240" alt="Sample 15"/>
+  <img src="./docs/samples/sample16.png" width="240" alt="Sample 16"/>
+  <img src="./docs/samples/sample17.png" width="240" alt="Sample 17"/>
+</p>
+
 ## Sample Slides
 
 Slides generated using prompts from this tool:
@@ -29,6 +58,7 @@ Slides generated using prompts from this tool:
 - Configurable color palettes and layouts
 - Collapsible slide previews with individual copy buttons
 - URL content extraction for automatic content generation
+- CSV file upload for data-driven presentations
 - Configurable LLM backend (OpenAI, OpenRouter, Ollama, etc.)
 
 ## Quick Start
@@ -138,4 +168,4 @@ docker-compose up -d
 
 ## Version
 
-v1.0.1
+v1.0.3
