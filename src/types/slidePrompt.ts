@@ -19,7 +19,8 @@ export type SlideStyle =
   | 'gradient-mesh'
   | 'sci-fi-hud'
   | 'deep-ocean'
-  | 'dev-console';
+  | 'dev-console'
+  | 'neon-scientific';
 
 export type AspectRatio = '16:9' | '4:3' | '1:1' | '9:16';
 
@@ -46,6 +47,7 @@ export interface ContentInput {
   topic: string;
   fileContent: string;
   fileName: string;
+  fileType?: 'text' | 'csv' | 'pdf';
   url: string;
   urlContent: string;
 }

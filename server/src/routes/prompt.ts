@@ -17,6 +17,7 @@ const generateSchema = z.object({
     topic: z.string().optional(),
     fileContent: z.string().optional(),
     fileName: z.string().optional(),
+    fileType: z.enum(['text', 'csv', 'pdf']).optional(),
     url: z.string().optional(),
     urlContent: z.string().optional(),
   }),
@@ -40,6 +41,7 @@ const generateSchema = z.object({
     'sci-fi-hud',
     'deep-ocean',
     'dev-console',
+    'neon-scientific',
   ]),
   settings: z.object({
     aspectRatio: z.enum(['16:9', '4:3', '1:1', '9:16']),
@@ -68,9 +70,11 @@ export const promptRouter = new Hono();
 /**
  * Build content text from request body.
  * Combines content from ALL tabs that have data, not just the selected tab.
+ * Returns both text content and optional PDF data for vision models.
  */
-function extractContentText(body: z.infer<typeof generateSchema>): string {
+function extractContentText(body: z.infer<typeof generateSchema>): { text: string; pdfData?: string } {
   const contentParts: string[] = [];
+  let pdfData: string | undefined;
 
   // Add text content if present
   if (body.content.text?.trim()) {
@@ -85,7 +89,15 @@ function extractContentText(body: z.infer<typeof generateSchema>): string {
   // Add file content if present
   if (body.content.fileContent?.trim()) {
     const fileName = body.content.fileName || 'uploaded file';
-    contentParts.push(`## Content from File "${fileName}"\n${body.content.fileContent.trim()}`);
+
+    if (body.content.fileType === 'pdf') {
+      // For PDFs, store the base64 data separately for vision models
+      pdfData = body.content.fileContent;
+      contentParts.push(`## PDF Document: "${fileName}"\n[PDF file attached - analyze the document content to create presentation slides]`);
+    } else {
+      // For text/CSV, include content directly
+      contentParts.push(`## Content from File "${fileName}"\n${body.content.fileContent.trim()}`);
+    }
   }
 
   // Add URL content if present
@@ -96,7 +108,7 @@ function extractContentText(body: z.infer<typeof generateSchema>): string {
     contentParts.push(`## Reference URL\nCreate a presentation about the content from: ${body.content.url}`);
   }
 
-  return contentParts.join('\n\n');
+  return { text: contentParts.join('\n\n'), pdfData };
 }
 
 // Original non-streaming endpoint (kept for backwards compatibility)
@@ -105,7 +117,7 @@ promptRouter.post(
   zValidator('json', generateSchema),
   async (c) => {
     const body = c.req.valid('json');
-    const contentText = extractContentText(body);
+    const { text: contentText, pdfData } = extractContentText(body);
 
     if (!contentText.trim()) {
       return c.json<GeneratePromptResponse>(
@@ -129,7 +141,8 @@ promptRouter.post(
     try {
       const generatedPrompts = await generateWithLLM(
         NANO_BANANA_PRO_SYSTEM_PROMPT,
-        userPrompt
+        userPrompt,
+        pdfData
       );
 
       // Parse the output into individual slides
@@ -213,7 +226,7 @@ promptRouter.post(
   zValidator('json', generateSchema),
   async (c) => {
     const body = c.req.valid('json');
-    const contentText = extractContentText(body);
+    const { text: contentText, pdfData } = extractContentText(body);
 
     if (!contentText.trim()) {
       return c.json(
@@ -243,7 +256,8 @@ promptRouter.post(
         // Start streaming from LLM
         for await (const chunk of generateWithLLMStream(
           NANO_BANANA_PRO_SYSTEM_PROMPT,
-          userPrompt
+          userPrompt,
+          pdfData
         )) {
           buffer += chunk;
 

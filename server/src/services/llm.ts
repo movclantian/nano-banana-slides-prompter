@@ -6,21 +6,33 @@ const client = new OpenAI({
 });
 
 const model = process.env.OPENAI_MODEL || 'gpt-4o';
-const maxTokens = parseInt(process.env.OPENAI_MAX_TOKENS || '16384', 10);
-const temperature = parseFloat(process.env.OPENAI_TEMPERATURE || '0.7');
+
+type MessageContent = string | Array<{ type: 'text'; text: string } | { type: 'image_url'; image_url: { url: string } }>;
 
 export async function generateWithLLM(
   systemPrompt: string,
-  userPrompt: string
+  userPrompt: string,
+  pdfDataUrl?: string
 ): Promise<string> {
+  // Build user message content - multimodal if PDF is provided
+  let userContent: MessageContent;
+
+  if (pdfDataUrl) {
+    // Multimodal message with PDF as image (works with vision models)
+    userContent = [
+      { type: 'text', text: userPrompt },
+      { type: 'image_url', image_url: { url: pdfDataUrl } }
+    ];
+  } else {
+    userContent = userPrompt;
+  }
+
   const response = await client.chat.completions.create({
     model,
     messages: [
       { role: 'system', content: systemPrompt },
-      { role: 'user', content: userPrompt },
+      { role: 'user', content: userContent as any },
     ],
-    temperature,
-    max_tokens: maxTokens,
   });
 
   return response.choices[0]?.message?.content || '';
@@ -32,16 +44,27 @@ export async function generateWithLLM(
  */
 export async function* generateWithLLMStream(
   systemPrompt: string,
-  userPrompt: string
+  userPrompt: string,
+  pdfDataUrl?: string
 ): AsyncGenerator<string> {
+  // Build user message content - multimodal if PDF is provided
+  let userContent: MessageContent;
+
+  if (pdfDataUrl) {
+    userContent = [
+      { type: 'text', text: userPrompt },
+      { type: 'image_url', image_url: { url: pdfDataUrl } }
+    ];
+  } else {
+    userContent = userPrompt;
+  }
+
   const stream = await client.chat.completions.create({
     model,
     messages: [
       { role: 'system', content: systemPrompt },
-      { role: 'user', content: userPrompt },
+      { role: 'user', content: userContent as any },
     ],
-    temperature,
-    max_tokens: maxTokens,
     stream: true,
   });
 
@@ -52,3 +75,4 @@ export async function* generateWithLLMStream(
     }
   }
 }
+

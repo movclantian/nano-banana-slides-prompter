@@ -94,20 +94,38 @@ export function ContentInput({ value, onChange }: ContentInputProps) {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const fileName = file.name.toLowerCase();
+    const isCsv = fileName.endsWith('.csv');
+
+    // Read text-based files (txt, md, csv) as plain text
     const reader = new FileReader();
     reader.onload = (event) => {
-      const content = event.target?.result as string;
+      let content = event.target?.result as string;
+
+      // For CSV, add a hint for the LLM
+      if (isCsv) {
+        content = `[CSV DATA - Parse this tabular data for presentation content]\n${content}`;
+      }
+
       onChange({
         ...value,
         fileName: file.name,
-        fileContent: content.slice(0, 5000) // Limit content size
+        fileContent: content.slice(0, 15000), // Limit for CSVs
+        fileType: isCsv ? 'csv' : 'text'
       });
     };
     reader.readAsText(file);
   };
 
   const clearFile = () => {
-    onChange({ ...value, fileName: '', fileContent: '' });
+    onChange({ ...value, fileName: '', fileContent: '', fileType: undefined });
+  };
+
+  // Helper to get file type icon/badge
+  const getFileTypeBadge = () => {
+    const ext = value.fileName?.split('.').pop()?.toLowerCase();
+    if (ext === 'csv') return 'CSV';
+    return 'TXT';
   };
 
   return (
@@ -185,9 +203,16 @@ export function ContentInput({ value, onChange }: ContentInputProps) {
                   <div className="flex items-center gap-3">
                     <FileText className="h-8 w-8 text-accent-foreground" />
                     <div>
-                      <p className="font-medium text-foreground">{value.fileName}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-foreground">{value.fileName}</p>
+                        <span className="px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded">
+                          {getFileTypeBadge()}
+                        </span>
+                      </div>
                       <p className="text-xs text-muted-foreground">
-                        {value.fileContent.length} characters extracted
+                        {value.fileType === 'pdf'
+                          ? 'PDF ready for LLM processing'
+                          : `${value.fileContent.length} characters extracted`}
                       </p>
                     </div>
                   </div>
@@ -202,12 +227,12 @@ export function ContentInput({ value, onChange }: ContentInputProps) {
                     Click to upload or drag and drop
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    TXT, MD, or other text files
+                    TXT, MD, or CSV files
                   </p>
                   <input
                     type="file"
                     className="hidden"
-                    accept=".txt,.md,.markdown"
+                    accept=".txt,.md,.markdown,.csv"
                     onChange={handleFileUpload}
                   />
                 </label>

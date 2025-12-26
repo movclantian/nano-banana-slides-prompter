@@ -1,7 +1,7 @@
 import {
   Briefcase, Cpu, Palette, BarChart3, GraduationCap, Gamepad2,
   Minus, Zap, PenTool, Layers, Clock, Box, Droplets, Newspaper,
-  Square, Blend, Crosshair, Waves, Terminal
+  Square, Blend, Crosshair, Waves, Terminal, Sparkles
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -148,6 +148,13 @@ const styleOptions: StyleOption[] = [
     description: 'Software architecture docs',
     icon: Terminal,
     previewColors: ['hsl(45 100% 50%)', 'hsl(0 0% 70%)', 'hsl(0 0% 8%)']
+  },
+  {
+    id: 'neon-scientific',
+    name: 'Neon Scientific',
+    description: 'Bioluminescent sci-fi visualization',
+    icon: Sparkles,
+    previewColors: ['hsl(190 100% 50%)', 'hsl(25 100% 60%)', 'hsl(220 50% 8%)']
   }
 ];
 

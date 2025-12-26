@@ -63,8 +63,6 @@ Edit the `.env` file with your LLM configuration:
 OPENAI_API_BASE=https://api.openai.com/v1
 OPENAI_API_KEY=your-api-key
 OPENAI_MODEL=gpt-4o
-OPENAI_MAX_TOKENS=16384
-OPENAI_TEMPERATURE=0.7
 PORT=3001
 ```
 
@@ -122,8 +120,6 @@ services:
       - OPENAI_API_BASE=${OPENAI_API_BASE:-https://api.openai.com/v1}
       - OPENAI_API_KEY=your-api-key-here
       - OPENAI_MODEL=gpt-4o
-      - OPENAI_MAX_TOKENS=16384
-      - OPENAI_TEMPERATURE=0.7
     restart: always
 ```
 

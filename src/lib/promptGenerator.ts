@@ -16,7 +16,11 @@ const styleDescriptions: Record<SlideStyle, string> = {
   watercolor: 'Soft, artistic style with painted textures, flowing colors, and organic shapes. Elegant and creative.',
   newspaper: 'Editorial design with bold headlines, column layouts, serif fonts, and print-inspired aesthetics. Classic and authoritative.',
   'flat-design': 'Bold solid colors, simple geometric shapes, no gradients or shadows. Clean and modern.',
-  'gradient-mesh': 'Modern style with flowing color transitions, mesh gradients, and abstract color blends. Contemporary and eye-catching.'
+  'gradient-mesh': 'Modern style with flowing color transitions, mesh gradients, and abstract color blends. Contemporary and eye-catching.',
+  'sci-fi-hud': 'Futuristic heads-up display with holographic elements, technical readouts, and cyberpunk aesthetics. High-tech and immersive.',
+  'deep-ocean': 'Deep underwater atmosphere with bioluminescent creatures, mysterious depths, and natural beauty. Documentary-style visuals.',
+  'dev-console': 'Developer terminal aesthetic with code syntax highlighting, system logs, and monospace fonts. Technical and authentic.',
+  'neon-scientific': 'Dark backgrounds with glowing bioluminescent elements, energy particle effects, and holographic scientific visualizations. Combine technical diagrams with cinematic neon lighting (blues, oranges, teals). Features flowing energy waves, high-contrast data overlays, and futuristic lab aesthetics. Perfect for presenting scientific concepts with dramatic visual impact.'
 };
 
 const colorPaletteDescriptions: Record<ColorPalette, string> = {
@@ -78,6 +82,8 @@ export function generatePrompt(config: SlidePromptConfig): GeneratedPrompt {
 ## Content
 ${contentSummary}
 
+Keep visuals, titles, and callouts coherent with the topic/context above; avoid repeating the topic verbatim on every slide unless it improves clarity.
+
 ## Visual Style
 **Style:** ${style.charAt(0).toUpperCase() + style.slice(1).replace('-', ' ')}
 ${styleDescriptions[style]}
@@ -91,14 +97,37 @@ ${layoutDescriptions[settings.layoutStructure]}
 ## Format
 **Aspect Ratio:** ${settings.aspectRatio} - ${aspectRatioDescriptions[settings.aspectRatio]}
 
-## Instructions
-For each slide, provide:
-1. **Slide Title** - Clear, engaging headline
-2. **Visual Description** - Detailed description of the main visual/image to generate
-3. **Key Points** - 2-4 bullet points or text elements
-4. **Design Notes** - Specific layout and styling instructions
+## Component & Visual System
+Leverage these reusable components consistently across all slides:
 
-Ensure visual consistency across all slides. Each visual description should be detailed enough for an AI image generator to create the exact image needed.
+**Stat Cards**: Bold numeric data (KPI, measurement, percentage) with label + short context. Size: 80-120px, rounded, accent color background, white text. Use for: metrics, benchmarks, key numbers.
+
+**Callout Boxes**: Text insight/quote with accent line or icon. Contains: bold title + 2-3 sentence explanation. Use for: key insights, tips, important notes.
+
+**Diagram Callouts**: Arrow + label + description pointing to visual elements. Use for: anatomy, process steps, architectural features.
+
+**Icon Systems**: Minimal, consistent icons paired with text for categories, features, or grouping.
+
+**Visual Zones**: Background (subtle grid/particle) + Hero Zone (60-70% cinematic visual) + Text Anchor (30-40% organized text) + Overlay (floating callouts/badges).
+
+## Slide Templates
+Use these templates as guides:
+- **Title/Cover**: Hook headline + subtitle + full-bleed visual. Minimal text.
+- **Concept/Explanation**: Large hero diagram + 3-4 positioned callout boxes + supporting text anchor.
+- **Data/Insight**: Hero chart (60%) + 2-3 metric cards + narrative text anchor (40%).
+- **Process/Timeline**: Numbered/flow steps + large visual of current step + callout specs + progress indicator.
+- **Comparison**: Dual-column layout with icons, visuals, bullets each + metric cards for contrast.
+- **Technical/Architecture**: Central diagram (blocks, flowchart) + labeled arrows + icon badges + callout specs.
+
+## Instructions
+For each slide, provide (detailed and spatial):
+1. **Slide Title** - Clear headline; cinematic or metaphorical phrasing OK.
+2. **Visual Description** - Rich sensory detail: camera angle, depth, lighting (glow, volumetric), motion/energy, textures, focal objects. Specify position/placement of key visual elements.
+3. **Component Placement** - Exact locations of stat cards, callout boxes, icons, and overlays (top-right, bottom-left, floating center, etc.).
+4. **Text Anchor** - Organized bullet structure, alignment, typographic hierarchy for the text zone.
+5. **Design Notes** - Layout zones (background + hero + text + overlay), accent colors, icon style, data types (chart, diagram, etc.), stylistic flourishes.
+
+Ensure visual consistency, generous negative space (20-30% of slide), and information hierarchy (title → hero → supporting callouts → footer). Each prompt should be detailed enough for an AI to generate the complete, multi-component slide.
 
 Generate all ${settings.slideCount} slides now.`;
 
@@ -116,5 +145,5 @@ ${userPrompt}`;
     ]
   };
 
-  return { plainText, jsonFormat };
+  return { plainText, jsonFormat, slides: [] };
 }
