@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Sparkles, Presentation, Loader2, X } from 'lucide-react';
+import { Sparkles, Loader2, X, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ContentInput } from '@/components/slide-prompt/ContentInput';
 import { StyleSelector } from '@/components/slide-prompt/StyleSelector';
+import { CharacterSelector } from '@/components/slide-prompt/CharacterSelector';
 import { PresentationSettings } from '@/components/slide-prompt/PresentationSettings';
 import { PromptOutput } from '@/components/slide-prompt/PromptOutput';
 import { useStreamingGeneration } from '@/hooks/useStreamingGeneration';
@@ -11,6 +12,7 @@ import type {
   ContentInput as ContentInputType,
   SlideStyle,
   PresentationSettings as PresentationSettingsType,
+  CharacterSettings,
 } from '@/types/slidePrompt';
 
 const defaultContent: ContentInputType = {
@@ -95,18 +97,31 @@ export default function Index() {
         />
 
         <div className="relative container mx-auto px-4 py-10 md:py-14">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-2xl bg-primary/10 backdrop-blur-sm border border-primary/20 shadow-lg shadow-primary/5">
-              <Presentation className="h-8 w-8 text-primary" />
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-2xl bg-primary/10 backdrop-blur-sm border border-primary/20 shadow-lg shadow-primary/5">
+                <img src="/logo.svg" alt="Nano Banana Logo" className="h-8 w-8" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+                  Nano Banana Slides Prompter
+                </h1>
+                <p className="text-muted-foreground mt-1">
+                  Create optimized prompts for AI-powered slide generation
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-                Nano Banana Slides Prompter
-              </h1>
-              <p className="text-muted-foreground mt-1">
-                Create optimized prompts for AI-powered slide generation
-              </p>
-            </div>
+
+            <a
+              href="https://github.com/nomie7/nano-banana-slides-prompter"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="gap-2 bg-background/50 backdrop-blur-sm border-primary/20 hover:bg-primary/10 hover:text-primary transition-all duration-300">
+                <Github className="h-4 w-4" />
+                <span className="hidden sm:inline">Star on GitHub</span>
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -137,10 +152,24 @@ export default function Index() {
               <StyleSelector value={style} onChange={setStyle} />
             </section>
 
-            <section className="animate-fade-in" style={{ animationDelay: '200ms' }}>
+            <section className="animate-fade-in" style={{ animationDelay: '150ms' }}>
               <div className="flex items-center gap-3 mb-4">
                 <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground text-sm font-semibold shadow-lg shadow-primary/25">
                   3
+                </span>
+                <h2 className="text-xl font-semibold text-foreground">Character Presenter</h2>
+                <span className="text-xs text-muted-foreground">(optional)</span>
+              </div>
+              <CharacterSelector
+                value={settings.character}
+                onChange={(character) => setSettings({ ...settings, character })}
+              />
+            </section>
+
+            <section className="animate-fade-in" style={{ animationDelay: '200ms' }}>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground text-sm font-semibold shadow-lg shadow-primary/25">
+                  4
                 </span>
                 <h2 className="text-xl font-semibold text-foreground">Configure Settings</h2>
               </div>
@@ -174,7 +203,7 @@ export default function Index() {
           <div className="lg:sticky lg:top-8 lg:self-start animate-fade-in" style={{ animationDelay: '300ms' }}>
             <div className="flex items-center gap-3 mb-4">
               <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground text-sm font-semibold shadow-lg shadow-primary/25">
-                4
+                5
               </span>
               <h2 className="text-xl font-semibold text-foreground">Your Prompt</h2>
             </div>

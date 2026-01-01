@@ -4,6 +4,37 @@ Generate optimized prompts for Nano Banana Pro Slides - Generate slides using AI
 
 ![App Screenshot](./docs/samples/Screenshot.png)
 
+## 🆕 v1.0.4 Update - Character Presenter!
+
+Introducing the **Character Presenter** feature! Add a consistent animated presenter across all your slides with extensive customization options.
+
+**What's New:**
+- 🎭 **Character Presenter** - Add an animated character to guide your presentation
+- 🎨 **8 Render Styles** - Pixar, Real, Anime, Cartoon, Sketch, Chibi, Low-Poly, Mascot
+- ⚧️ **Gender Options** - Male, Female, or let AI decide
+- 🎯 **24 Character Combinations** - Mix and match styles with gender preferences
+- 🔄 **Adaptive Styling** - Characters automatically adapt to match your slide style
+
+**New Sample Slides (v1.0.4):**
+
+<p>
+  <img src="./docs/samples/sample18.jpeg" width="240" alt="Sample 18"/>
+  <img src="./docs/samples/sample19.jpeg" width="240" alt="Sample 19"/>
+  <img src="./docs/samples/sample20.jpeg" width="240" alt="Sample 20"/>
+</p>
+<p>
+  <img src="./docs/samples/sample21.png" width="240" alt="Sample 21"/>
+  <img src="./docs/samples/sample22.png" width="240" alt="Sample 22"/>
+  <img src="./docs/samples/sample23.jpeg" width="240" alt="Sample 23"/>
+</p>
+<p>
+  <img src="./docs/samples/sample24.png" width="240" alt="Sample 24"/>
+  <img src="./docs/samples/sample25.png" width="240" alt="Sample 25"/>
+  <img src="./docs/samples/sample26.png" width="240" alt="Sample 26"/>
+</p>
+
+---
+
 ## 🆕 v1.0.3 Update - Even More Amazing Results!
 
 We've made significant improvements to the prompt generation engine. The results are now more cinematic, feature-rich, and visually stunning than ever before!
@@ -55,6 +86,7 @@ Slides generated using prompts from this tool:
 ## Features
 
 - Multiple visual styles (Professional, Technical, Creative, Educational, and more)
+- Character Presenter with 8 render styles and 24 customization combinations
 - Configurable color palettes and layouts
 - Collapsible slide previews with individual copy buttons
 - URL content extraction for automatic content generation
@@ -168,4 +200,4 @@ docker-compose up -d
 
 ## Version
 
-v1.0.3
+v1.0.4

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bananaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FCD34D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background glow -->
+  <circle cx="256" cy="256" r="240" fill="#F59E0B" fill-opacity="0.1" />
+  
+  <!-- Banana Shape -->
+  <path d="M120 380 C 120 380, 200 450, 380 200 C 380 200, 400 160, 410 120 C 410 120, 380 140, 360 160 C 250 260, 180 340, 120 380 Z" 
+        fill="url(#bananaGradient)" 
+        stroke="#D97706" 
+        stroke-width="10" 
+        stroke-linejoin="round" />
+        
+  <!-- Stem -->
+  <path d="M410 120 L 430 110" stroke="#78350F" stroke-width="12" stroke-linecap="round" />
+</svg>

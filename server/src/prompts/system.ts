@@ -1,4 +1,4 @@
-import type { SlideStyle, ColorPalette, LayoutStructure, AspectRatio } from './types';
+import type { SlideStyle, ColorPalette, LayoutStructure, AspectRatio, RenderStyle, CharacterGender, CharacterSettings } from './types';
 
 export const NANO_BANANA_PRO_SYSTEM_PROMPT = `You are an expert prompt engineer for Nano Banana Pro Slides, Google's AI slide generation tool. You create RICH, CINEMATIC, FEATURE-PACKED slides that would impress at a TED talk or National Geographic presentation. Think: sci-fi movie interfaces, nature documentary graphics, premium keynote visuals.
 
@@ -447,6 +447,305 @@ export const stylePersonas: Record<SlideStyle, string> = {
   'neon-scientific': 'You are a VFX artist creating science visualizations for Netflix documentaries. Bioluminescent, dramatic, cinematic. Science made spectacular.',
 };
 
+// Character presenter descriptions - base identity for each render style
+export const renderStyleDescriptions: Record<RenderStyle, string> = {
+  'pixar': `A friendly 3D animated presenter character in Pixar/Disney animation style.
+CORE IDENTITY: Approachable adult, expressive features, warm smile, slightly exaggerated proportions (large expressive eyes, rounded features). Dynamic posture with professional bearing.
+CONSISTENT ELEMENTS: Same facial structure, hair style, and body proportions across ALL slides.
+WARDROBE ADAPTS: Lab coat for science, business casual for corporate, casual for creative topics.
+EXPRESSIONS: Enthusiastic, confident, engaged - varies with slide content tone.`,
+
+  'real': `A photorealistic human presenter with professional presence.
+CORE IDENTITY: Professional adult with polished appearance, genuine warm expression, trustworthy features. Well-groomed, confident stance.
+CONSISTENT ELEMENTS: Same face, hair, skin tone, and build across ALL slides.
+WARDROBE ADAPTS: Suit for formal, smart casual for creative, lab coat for technical/scientific.
+EXPRESSIONS: Professional, authoritative yet approachable - varies with slide tone.`,
+
+  'anime': `A dynamic presenter character in Japanese animation style.
+CORE IDENTITY: Stylized adult with distinctive anime features - large expressive eyes, simplified nose, dynamic hair. Energetic poses with expressive gestures.
+CONSISTENT ELEMENTS: Same face design, hair color/style, and character proportions across ALL slides.
+WARDROBE ADAPTS: School uniform, business attire, or casual depending on topic context.
+EXPRESSIONS: Exaggerated anime expressions - sparkly eyes for excitement, sweat drops for concern, confident smirks for emphasis.`,
+
+  'cartoon': `A vibrant 2D Western cartoon-style presenter character.
+CORE IDENTITY: Exaggerated cartoon proportions, bold outlines, expressive rubbery features. Think classic animation meets modern cartoon aesthetics.
+CONSISTENT ELEMENTS: Same character design, color scheme, and recognizable silhouette across ALL slides.
+WARDROBE ADAPTS: Simple iconic outfits that read clearly at any size.
+EXPRESSIONS: Broad cartoon expressions with squash and stretch principles, exaggerated reactions.`,
+
+  'sketch': `A hand-drawn sketch-style presenter character.
+CORE IDENTITY: Loose pencil/ink line art aesthetic, artistic imperfection, warm organic feel. Like a designer's character concept sketch come to life.
+CONSISTENT ELEMENTS: Same sketchy line style, character proportions, and recognizable features across ALL slides.
+WARDROBE ADAPTS: Suggested through loose line work rather than detailed rendering.
+EXPRESSIONS: Expressive through gestural lines, rough but readable emotional states.`,
+
+  'chibi': `A cute chibi-style presenter character with exaggerated proportions.
+CORE IDENTITY: Small body, large head (3:1 ratio), oversized expressive eyes, simplified adorable features. Kawaii aesthetic with playful energy.
+CONSISTENT ELEMENTS: Same chibi proportions, face design, and color palette across ALL slides.
+WARDROBE ADAPTS: Simplified cute versions of appropriate attire.
+EXPRESSIONS: Exaggerated cute expressions - big sparkly eyes, tiny mouth expressions, blush marks for emotion.`,
+
+  'low-poly': `A geometric low-polygon 3D presenter character.
+CORE IDENTITY: Angular faceted geometry, clearly visible polygon edges, stylized 3D aesthetic. Modern gaming/tech visual style.
+CONSISTENT ELEMENTS: Same polygon structure, face geometry, and color scheme across ALL slides.
+WARDROBE ADAPTS: Geometric simplified versions of clothing with flat shaded surfaces.
+EXPRESSIONS: Subtle expressions through geometry shifts, readable but stylized.`,
+
+  'mascot': `A friendly corporate mascot-style presenter character.
+CORE IDENTITY: Approachable branded character, simplified friendly features, iconic recognizable design. Think tech company mascot or brand ambassador character.
+CONSISTENT ELEMENTS: Same mascot design, signature colors, and recognizable silhouette across ALL slides.
+WARDROBE ADAPTS: Minimal clothing, relies on character design and props.
+EXPRESSIONS: Friendly approachable expressions, always positive and engaging, brand-appropriate demeanor.`,
+};
+
+// Gender modifiers to append when gender is specified (male/female)
+export const genderModifiers: Record<CharacterGender, string> = {
+  'none': '', // No gender specification - let AI decide
+  'male': 'The character is MALE with masculine features and presentation.',
+  'female': 'The character is FEMALE with feminine features and presentation.',
+};
+
+// How each render style should adapt to each visual slide style
+// Gender doesn't affect visual adaptation - only render style matters
+export const characterStyleAdaptations: Record<SlideStyle, Record<RenderStyle, string>> = {
+  'professional': {
+    'pixar': 'Polished 3D Pixar animation with professional studio lighting, corporate-appropriate attire, clean rendering with soft shadows.',
+    'real': 'Photorealistic with professional studio lighting, tailored business attire, corporate headshot quality, clean backdrop integration.',
+    'anime': 'Professional anime style with clean lines, business attire, polished presentation, subtle expressions.',
+    'cartoon': 'Clean cartoon style with professional colors, business-appropriate design, polished but friendly.',
+    'sketch': 'Refined pencil sketch style, professional subject matter, clean confident lines, business context.',
+    'chibi': 'Professional chibi with business attire, cute but competent appearance, corporate-friendly kawaii.',
+    'low-poly': 'Clean geometric 3D with professional lighting, business-appropriate polygon design, modern tech aesthetic.',
+    'mascot': 'Polished corporate mascot style, professional branding aesthetic, trustworthy friendly design.',
+  },
+  'technical': {
+    'pixar': 'Precise 3D Pixar rendering with clean edges, technical/engineering attire (lab coat, safety gear), blueprint-compatible color grading.',
+    'real': 'Photorealistic with technical styling, precise lighting, professional technical attire (lab coat, engineering vest).',
+    'anime': 'Technical anime style with precise lines, lab coat or engineer attire, focused analytical expression.',
+    'cartoon': 'Technical cartoon with blueprint aesthetics, precise outlines, engineering-themed design.',
+    'sketch': 'Technical sketch style like engineering drawings, precise controlled lines, schematic feel.',
+    'chibi': 'Technical chibi with lab coat, small tools or equipment, cute engineer aesthetic.',
+    'low-poly': 'Precise geometric rendering, technical color palette, engineering-grade polygon design.',
+    'mascot': 'Technical mascot with engineering props, precise friendly design, tech company aesthetic.',
+  },
+  'creative': {
+    'pixar': 'Vibrant 3D Pixar animation with dynamic pose, bold color accents, creative attire, expressive artistic lighting.',
+    'real': 'Photorealistic with creative artistic lighting, creative casual attire, dynamic energetic presence.',
+    'anime': 'Expressive anime style with dynamic poses, artistic flair, creative colorful design.',
+    'cartoon': 'Bold expressive cartoon with vibrant colors, dynamic poses, artistic freedom.',
+    'sketch': 'Loose expressive sketch style, artistic gestural lines, creative energy.',
+    'chibi': 'Playful creative chibi with artistic props, colorful expressive design.',
+    'low-poly': 'Artistic low-poly with bold colors, creative geometric interpretation.',
+    'mascot': 'Creative mascot with artistic flair, playful dynamic design, bold colors.',
+  },
+  'infographic': {
+    'pixar': 'Clean simplified 3D Pixar style suited for data visualization context, professional styling, friendly approachable rendering.',
+    'real': 'Clean professional rendering suited for data visualization, approachable presence.',
+    'anime': 'Clean anime style optimized for infographic integration, simple readable design.',
+    'cartoon': 'Simple clean cartoon for data context, clear readable design.',
+    'sketch': 'Clean sketch style that complements data visualization, simple lines.',
+    'chibi': 'Simple chibi design for infographic friendliness, data-presenter aesthetic.',
+    'low-poly': 'Clean geometric design for data visualization, simple readable forms.',
+    'mascot': 'Friendly data mascot, infographic-compatible design, approachable presenter.',
+  },
+  'educational': {
+    'pixar': 'Warm friendly 3D Pixar animation with approachable lighting, teacher/instructor attire, engaging welcoming expression.',
+    'real': 'Warm approachable photorealistic rendering, friendly lighting, educator styling, inviting presence.',
+    'anime': 'Friendly anime teacher style, warm approachable design, encouraging expressions.',
+    'cartoon': 'Warm friendly cartoon teacher aesthetic, approachable educational design.',
+    'sketch': 'Warm sketchy illustration style, friendly educational aesthetic.',
+    'chibi': 'Adorable teacher chibi, educational props, encouraging kawaii presence.',
+    'low-poly': 'Friendly geometric design, warm educational colors, approachable forms.',
+    'mascot': 'Educational mascot style, friendly learning companion, encouraging presence.',
+  },
+  'pixel-art': {
+    'pixar': 'Transform 3D Pixar to 8-bit pixel art style: blocky geometry, limited color palette, pixelated edges, nostalgic sprite-like appearance.',
+    'real': 'Transform to pixel art avatar: recognizable features in chunky pixels, retro game character aesthetic.',
+    'anime': 'Anime character as pixel sprite, retro game aesthetic, limited color palette.',
+    'cartoon': 'Cartoon as pixel art sprite, classic game aesthetic, chunky pixels.',
+    'sketch': 'Sketch style rendered in pixels, hand-drawn feel in blocky form.',
+    'chibi': 'Chibi pixel sprite, cute retro game character, limited colors.',
+    'low-poly': 'Low-poly merged with pixel aesthetic, geometric retro style.',
+    'mascot': 'Mascot as pixel game character, retro sprite aesthetic.',
+  },
+  'minimalist': {
+    'pixar': 'Simplified minimal 3D Pixar rendering: clean forms, reduced detail, zen-like simplicity, essential features only.',
+    'real': 'Minimal photorealistic treatment: simplified clean rendering, essential details only, quiet presence.',
+    'anime': 'Minimal anime with reduced lines, essential features, clean simplicity.',
+    'cartoon': 'Ultra-simplified cartoon, essential shapes only, minimal design.',
+    'sketch': 'Minimal sketch with few essential lines, zen-like simplicity.',
+    'chibi': 'Ultra-simple chibi, minimal features, essential cute forms.',
+    'low-poly': 'Extremely simplified geometry, minimal polygon count, essential forms.',
+    'mascot': 'Simplified mascot silhouette, essential recognizable features only.',
+  },
+  'dark-neon': {
+    'pixar': 'Cyberpunk neon Pixar aesthetic: dramatic rim lighting in electric colors (cyan, magenta), glowing edge highlights, dark silhouette with vibrant glow.',
+    'real': 'Photorealistic with neon lighting: dramatic electric highlights, glowing rim lights, cyberpunk atmosphere.',
+    'anime': 'Neon anime aesthetic with glowing outlines, cyberpunk color scheme, electric highlights.',
+    'cartoon': 'Neon cartoon style with glowing edges, cyberpunk colors, dark background.',
+    'sketch': 'Neon-outlined sketch on dark background, glowing line effects.',
+    'chibi': 'Cyberpunk chibi with neon glow effects, electric color accents.',
+    'low-poly': 'Neon-lit geometric form, glowing polygon edges, cyberpunk aesthetic.',
+    'mascot': 'Neon cyberpunk mascot with glowing accents, futuristic design.',
+  },
+  'hand-drawn': {
+    'pixar': 'Transform Pixar to sketchy hand-drawn style: pencil/charcoal lines, organic imperfect strokes, warm paper texture feel.',
+    'real': 'Transform to illustrated pencil sketch: hand-drawn portrait style, artistic linework, warm organic aesthetic.',
+    'anime': 'Hand-drawn anime sketch style, loose gestural lines, artistic feel.',
+    'cartoon': 'Loose sketchy cartoon, hand-drawn charm, organic imperfect lines.',
+    'sketch': 'Enhanced sketch aesthetic, artistic pencil work, charcoal textures.',
+    'chibi': 'Hand-drawn chibi sketch, cute doodle style, warm organic lines.',
+    'low-poly': 'Geometric forms rendered in sketch style, hand-drawn angular lines.',
+    'mascot': 'Hand-drawn mascot illustration, sketchy friendly design.',
+  },
+  'glassmorphism': {
+    'pixar': '3D Pixar with frosted glass overlay: character visible through translucent panels, soft blur effects, ethereal glass-like framing.',
+    'real': 'Photorealistic integrated with glass effects: presenter behind frosted panels, modern translucent aesthetic.',
+    'anime': 'Anime character with glass overlay effects, frosted UI integration.',
+    'cartoon': 'Cartoon with glassmorphism framing, translucent panel integration.',
+    'sketch': 'Sketch style behind frosted glass effects, ethereal layering.',
+    'chibi': 'Chibi with glass UI elements, frosted kawaii aesthetic.',
+    'low-poly': 'Geometric form with glass effects, translucent modern integration.',
+    'mascot': 'Mascot with glassmorphism UI, modern frosted aesthetic.',
+  },
+  'vintage': {
+    'pixar': 'Transform Pixar to vintage aesthetic: muted sepia-toned colors, aged paper texture overlay, nostalgic warm tones.',
+    'real': 'Apply vintage photographic treatment: sepia tones, aged photo aesthetic, nostalgic warm coloring.',
+    'anime': 'Vintage anime style, muted retro colors, classic aged aesthetic.',
+    'cartoon': 'Retro vintage cartoon, classic animation feel, aged color palette.',
+    'sketch': 'Aged sketch on vintage paper, sepia tones, nostalgic feel.',
+    'chibi': 'Vintage chibi with retro colors, classic cute aesthetic.',
+    'low-poly': 'Retro-styled geometric design, vintage color palette.',
+    'mascot': 'Classic vintage mascot style, retro branding aesthetic.',
+  },
+  '3d-isometric': {
+    'pixar': 'Render Pixar in isometric 3D perspective: character at isometric angle, dimensional shading, spatial depth integration.',
+    'real': 'Transform to stylized isometric illustration: 3D isometric rendering, matching spatial perspective.',
+    'anime': 'Isometric anime character, matching dimensional perspective.',
+    'cartoon': 'Isometric cartoon design, 3D spatial integration.',
+    'sketch': 'Isometric sketch style, dimensional line work.',
+    'chibi': 'Isometric chibi, cute 3D perspective matching.',
+    'low-poly': 'Perfect isometric low-poly, geometric 3D harmony.',
+    'mascot': 'Isometric mascot design, spatial brand integration.',
+  },
+  'watercolor': {
+    'pixar': 'Transform Pixar to soft watercolor painting: gentle color bleeds, artistic brushwork texture, painted aesthetic with soft edges.',
+    'real': 'Transform to watercolor portrait: soft painted textures, artistic color bleeding, gentle brushwork.',
+    'anime': 'Watercolor anime style, soft painted edges, artistic color washes.',
+    'cartoon': 'Watercolor cartoon, painted texture, soft artistic edges.',
+    'sketch': 'Watercolor sketch, loose painted linework, artistic bleeding.',
+    'chibi': 'Watercolor chibi, soft painted kawaii, gentle colors.',
+    'low-poly': 'Watercolor treatment on geometric forms, soft painted polygons.',
+    'mascot': 'Watercolor mascot illustration, soft painted branding.',
+  },
+  'newspaper': {
+    'pixar': 'Transform Pixar to editorial illustration: high contrast black and white with accent color, newsprint texture, bold graphic treatment.',
+    'real': 'Transform to editorial graphic: high contrast photographic treatment, newspaper photo aesthetic.',
+    'anime': 'Editorial anime style, high contrast, newspaper graphic aesthetic.',
+    'cartoon': 'Editorial cartoon, bold newspaper style, high contrast.',
+    'sketch': 'Editorial sketch illustration, newspaper graphic style.',
+    'chibi': 'Editorial chibi, newspaper-friendly graphic design.',
+    'low-poly': 'High contrast geometric design, editorial graphic style.',
+    'mascot': 'Editorial mascot, newspaper-style brand illustration.',
+  },
+  'flat-design': {
+    'pixar': 'Simplify Pixar to flat design: bold solid colors, no shadows or gradients, clean vector-style silhouette.',
+    'real': 'Transform to flat illustration: simplified geometric forms, solid colors, clean vector silhouette.',
+    'anime': 'Flat anime style, bold colors, no gradients, clean design.',
+    'cartoon': 'Flat cartoon design, solid colors, geometric simplification.',
+    'sketch': 'Flat vector style with sketch influence, clean solid forms.',
+    'chibi': 'Flat chibi design, bold solid colors, simple geometry.',
+    'low-poly': 'Flat-shaded low-poly, solid color polygons, clean design.',
+    'mascot': 'Flat mascot design, solid brand colors, clean vector style.',
+  },
+  'gradient-mesh': {
+    'pixar': '3D Pixar with flowing gradient aesthetic: smooth color transitions, mesh gradient coloring, contemporary artistic style.',
+    'real': 'Photorealistic with gradient overlay enhancement: smooth color transitions, contemporary gradient aesthetic.',
+    'anime': 'Anime with gradient mesh coloring, flowing color transitions.',
+    'cartoon': 'Cartoon with smooth gradient fills, modern color blends.',
+    'sketch': 'Sketch with gradient color washes, artistic blends.',
+    'chibi': 'Chibi with gradient mesh coloring, smooth kawaii colors.',
+    'low-poly': 'Gradient-filled polygons, smooth color mesh on geometry.',
+    'mascot': 'Mascot with gradient styling, modern color transitions.',
+  },
+  'sci-fi-hud': {
+    'pixar': 'Render Pixar as holographic projection: cyan/teal translucent glow, scanline effects, HUD targeting brackets, futuristic digital presence.',
+    'real': 'Transform to holographic avatar: semi-transparent glowing form, digital scanlines, HUD overlay elements.',
+    'anime': 'Holographic anime character, digital HUD integration, sci-fi glow.',
+    'cartoon': 'Holographic cartoon, digital projection aesthetic, HUD elements.',
+    'sketch': 'Digital hologram sketch, glowing lines, sci-fi overlay.',
+    'chibi': 'Holographic chibi, cute digital projection, HUD kawaii.',
+    'low-poly': 'Holographic geometric form, glowing polygon edges, HUD integration.',
+    'mascot': 'Holographic mascot projection, futuristic brand presence.',
+  },
+  'deep-ocean': {
+    'pixar': '3D Pixar with underwater documentary aesthetic: blue-teal color grading, bioluminescent edge glow, depth atmosphere.',
+    'real': 'Apply underwater documentary treatment: blue color grading, documentary lighting, oceanic atmosphere.',
+    'anime': 'Underwater anime style, blue-teal color grading, bioluminescent accents.',
+    'cartoon': 'Underwater cartoon aesthetic, ocean color palette, depth effects.',
+    'sketch': 'Underwater sketch style, blue-toned linework, ocean atmosphere.',
+    'chibi': 'Ocean chibi, underwater kawaii, bioluminescent cute accents.',
+    'low-poly': 'Underwater geometric design, ocean blue polygons, depth lighting.',
+    'mascot': 'Ocean mascot style, underwater brand presence, marine aesthetic.',
+  },
+  'dev-console': {
+    'pixar': '3D Pixar with developer aesthetic: dark mode color scheme, gold/amber accent highlights (#FFB800), technical precision.',
+    'real': 'Apply developer dark theme treatment: dark mode aesthetic, gold accent lighting, technical presentation style.',
+    'anime': 'Developer anime style, dark theme colors, amber code accents.',
+    'cartoon': 'Dev cartoon style, dark mode aesthetic, terminal colors.',
+    'sketch': 'Developer sketch, dark background, amber highlight lines.',
+    'chibi': 'Developer chibi, dark theme kawaii, code aesthetic.',
+    'low-poly': 'Dark mode geometric design, amber accent polygons.',
+    'mascot': 'Developer mascot, dark theme brand, tech company aesthetic.',
+  },
+  'neon-scientific': {
+    'pixar': '3D Pixar with bioluminescent sci-fi aesthetic: glowing cyan/teal edges (#00D4FF), dramatic spot lighting, particle effects.',
+    'real': 'Apply sci-fi scientific treatment: dramatic neon lighting, bioluminescent highlights, cinematic presentation.',
+    'anime': 'Neon scientific anime, bioluminescent glow, dramatic sci-fi lighting.',
+    'cartoon': 'Neon scientific cartoon, glowing effects, dramatic presentation.',
+    'sketch': 'Neon-lit scientific sketch, glowing line effects, dramatic atmosphere.',
+    'chibi': 'Neon scientific chibi, glowing kawaii, bioluminescent cute.',
+    'low-poly': 'Bioluminescent geometric form, glowing polygon edges, scientific aesthetic.',
+    'mascot': 'Neon scientific mascot, glowing brand presence, dramatic lighting.',
+  },
+};
+
+// Character behavior instructions to inject into system prompt when character is enabled
+export const CHARACTER_PRESENTER_INSTRUCTIONS = `
+## CHARACTER PRESENTER GUIDELINES
+
+You are including a consistent presenter character throughout ALL slides. This character MUST:
+
+### Visual Consistency (CRITICAL)
+- SAME character appearance (face, build, hair) across ALL slides in the deck
+- This is the SAME PERSON in different poses/positions, NOT different people
+- Maintain recognizable identity even when style transforms the rendering approach
+
+### Dynamic Positioning
+- Position character PROMINENTLY on each slide - never hidden or secondary
+- Vary position per slide based on content layout (left side pointing right, right side gesturing left, center for emphasis)
+- Character should INTERACT with content, not just stand beside it
+- Consider: pointing at data, gesturing toward text, demonstrating concepts, presenting diagrams
+
+### Content Interaction
+- POINTING: Direct attention to key data points, charts, or text
+- GESTURING: Open hand presentations, enumeration gestures, emphasis movements
+- DEMONSTRATING: Holding relevant props, manipulating conceptual objects
+- EXPLAINING: Teaching poses, thoughtful contemplation, eureka moments
+
+### Expression & Pose Matching
+- Match expression to slide tone (excited for achievements, thoughtful for complex topics, confident for conclusions)
+- Vary poses between slides to maintain visual interest
+- Props adapt to content (clipboard for data, lightbulb for ideas, tools for technical content)
+
+### Style Adaptation
+- Character MUST adopt the visual language of the selected style
+- In pixel-art: character becomes pixelated
+- In watercolor: character has painted texture
+- In sci-fi-hud: character appears holographic
+- Always inherit the style's color palette and visual treatment
+`;
+
 export interface PromptConfig {
   content: string;
   style: SlideStyle;
@@ -454,6 +753,7 @@ export interface PromptConfig {
   layoutStructure: LayoutStructure;
   aspectRatio: AspectRatio;
   slideCount: number;
+  character?: CharacterSettings;
 }
 
 export function buildUserPrompt(config: PromptConfig): string {
@@ -464,16 +764,50 @@ export function buildUserPrompt(config: PromptConfig): string {
     layoutStructure,
     aspectRatio,
     slideCount,
+    character,
   } = config;
 
   const styleLabel = style.charAt(0).toUpperCase() + style.slice(1).replace(/-/g, ' ');
   const persona = stylePersonas[style];
 
+  // Build character instruction block if enabled
+  let characterBlock = '';
+  if (character?.enabled && character?.renderStyle) {
+    const renderDescription = renderStyleDescriptions[character.renderStyle];
+    const styleAdaptation = characterStyleAdaptations[style][character.renderStyle];
+    const renderStyleLabel = character.renderStyle.charAt(0).toUpperCase() + character.renderStyle.slice(1).replace(/-/g, ' ');
+    const genderModifier = character.gender && character.gender !== 'none' ? genderModifiers[character.gender] : '';
+
+    characterBlock = `
+${CHARACTER_PRESENTER_INSTRUCTIONS}
+
+## YOUR PRESENTER CHARACTER (REQUIRED ON ALL SLIDES)
+
+**Character Render Style:** ${renderStyleLabel}
+${renderDescription}
+${genderModifier ? `\n${genderModifier}` : ''}
+
+**Style Adaptation for ${styleLabel}:**
+${styleAdaptation}
+
+**Per-Slide Character Requirements:**
+For EACH slide, you MUST describe:
+1. Character POSITION on slide (e.g., "left side facing right", "bottom-right corner", "center foreground")
+2. Character POSE and GESTURE (e.g., "pointing at the chart", "hands open presenting", "holding a tablet")
+3. Character EXPRESSION (e.g., "excited smile", "thoughtful contemplation", "confident presentation")
+4. Any PROPS if relevant (e.g., "holding clipboard with data", "gesturing at floating hologram")
+
+**CRITICAL**: This is the SAME character on ALL slides. Maintain visual consistency while varying poses and expressions.
+
+---
+`;
+  }
+
   return `## YOUR CREATIVE IDENTITY
 ${persona}
 
 You are creating a ${styleLabel} presentation. EVERY visual decision must reflect ${styleLabel} aesthetics. This style is non-negotiable—it defines every element you describe.
-
+${characterBlock}
 ---
 
 Generate ${slideCount} CINEMATICALLY RICH Nano Banana Pro Slides prompts for a visually stunning presentation deck.

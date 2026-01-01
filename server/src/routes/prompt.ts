@@ -62,6 +62,11 @@ const generateSchema = z.object({
       'neon-night',
     ]),
     layoutStructure: z.enum(['visual-heavy', 'text-heavy', 'balanced']),
+    character: z.object({
+      enabled: z.boolean(),
+      renderStyle: z.enum(['pixar', 'real', 'anime', 'cartoon', 'sketch', 'chibi', 'low-poly', 'mascot']),
+      gender: z.enum(['none', 'male', 'female']),
+    }).optional(),
   }),
 });
 
@@ -136,6 +141,7 @@ promptRouter.post(
       layoutStructure: body.settings.layoutStructure,
       aspectRatio: body.settings.aspectRatio,
       slideCount: body.settings.slideCount,
+      character: body.settings.character,
     });
 
     try {
@@ -245,6 +251,7 @@ promptRouter.post(
       layoutStructure: body.settings.layoutStructure,
       aspectRatio: body.settings.aspectRatio,
       slideCount: body.settings.slideCount,
+      character: body.settings.character,
     });
 
     return streamSSE(c, async (stream) => {

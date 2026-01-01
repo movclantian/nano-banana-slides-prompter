@@ -41,6 +41,28 @@ export type ColorPalette =
   | 'arctic-frost'
   | 'neon-night';
 
+// Character presenter types
+export type RenderStyle =
+  | 'pixar'      // 3D animated (Pixar/Disney)
+  | 'real'       // Photorealistic human
+  | 'anime'      // Japanese animation
+  | 'cartoon'    // 2D Western cartoon
+  | 'sketch'     // Hand-drawn pencil/ink
+  | 'chibi'      // Cute small-proportioned
+  | 'low-poly'   // Geometric 3D
+  | 'mascot';    // Corporate mascot style
+
+export type CharacterGender =
+  | 'none'       // Unspecified (default) - don't include gender in prompt
+  | 'male'
+  | 'female';
+
+export interface CharacterSettings {
+  enabled: boolean;
+  renderStyle: RenderStyle;
+  gender: CharacterGender;
+}
+
 export interface ContentInput {
   type: ContentInputType;
   text: string;
@@ -57,6 +79,7 @@ export interface PresentationSettings {
   slideCount: number;
   colorPalette: ColorPalette;
   layoutStructure: LayoutStructure;
+  character?: CharacterSettings;
 }
 
 export interface SlidePromptConfig {
